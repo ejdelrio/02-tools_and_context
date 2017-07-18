@@ -1,51 +1,52 @@
 'use strict';
 
+module.exports = exports = {};
 
-const argumentLengthError = (argLength, expectedLength) => {
-  if(argLength < expectedLength) throw new Error(`Function requires ${expectedLength} arguments. Only ${argLength} provided.`);
+exports.argumentLengthError = (argLength, expectedLength) => {
+  if(argLength < expectedLength) throw new Error(`exports.requires ${expectedLength} arguments. Only ${argLength} provided.`);
 };
-const typeError = (objType, expectedType) => {
-  if(objType !== expectedType) throw new Error(`Function expected ${expectedType} type parameter but recieved ${objType} instead.`);
+exports.typeError = (objType, expectedType) => {
+  if(objType !== expectedType) throw new Error(`exports.expected ${expectedType} type parameter but recieved ${objType} instead.`);
 };
 
 
-function map(arr, callback) {
+exports.map = function(arr, callback) {
   let argumentLength = arguments.length;
-  argumentLengthError(argumentLength, 2);
-  typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
-  typeError(typeof callback, 'function');
+  this.argumentLengthError(argumentLength, 2);
+  this.typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
+  this.typeError(typeof callback, 'function');
   return Array.prototype.map.call(arr, callback);
-}
+};
 
-function filter(arr, callback) {
+exports.filter = function(arr, callback) {
   let argumentLength = arguments.length;
-  argumentLengthError(argumentLength, 2);
-  typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
-  typeError(typeof callback, 'function');
+  this.argumentLengthError(argumentLength, 2);
+  this.typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
+  this.typeError(typeof callback, 'function');
   return Array.prototype.filter.call(arr, callback);
-}
+};
 
-function reduce(arr, callback, counter=arr[0]) {
+exports.reduce = function(arr, callback, counter=arr[0]) {
   let argumentLength = arguments.length;
-  argumentLengthError(argumentLength, 3);
-  typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
-  typeError(typeof callback, 'function');
+  this.argumentLengthError(argumentLength, 3);
+  this.typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
+  this.typeError(typeof callback, 'function');
   return Array.prototype.reduce.call(arr, callback, counter);
-}
+};
 
-function concat(firstArray, secondArray) {
+exports.concat = function(firstArray, secondArray) {
   let argumentLength = arguments.length;
-  argumentLengthError(argumentLength, 2);
-  typeError(Array.isArray(firstArray) ? 'array' : 'not an array', 'array');
-  typeError(Array.isArray(secondArray) ? 'array' : 'not an array', 'array');
-  Array.prototype.concat.apply(firstArray, secondArray);
-}
+  this.argumentLengthError(argumentLength, 2);
+  this.typeError(Array.isArray(firstArray) ? 'array' : 'not an array', 'array');
+  this.typeError(Array.isArray(secondArray) ? 'array' : 'not an array', 'array');
+  return Array.prototype.concat.apply(firstArray, secondArray);
+},
 
-function splice(arr, startingIndex, amountToDelete) {
+exports.splice = function(arr, startingIndex, amountToDelete, ...items) {
   let argumentLength = arguments.length;
-  argumentLengthError(argumentLength, 2);
-  typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
-  typeError(typeof startingIndex, 'number');
-  if(amountToDelete) typeError(typeof amountToDelete, 'number');
-  Array.prototype.splice.call(arr, startingIndex, amountToDelete);
-}
+  this.argumentLengthError(argumentLength, 2);
+  this.typeError(Array.isArray(arr) ? 'array' : 'not an array', 'array');
+  this.typeError(typeof startingIndex, 'number');
+  if(amountToDelete) this.typeError(typeof amountToDelete, 'number');
+  return Array.prototype.splice.call(arr, startingIndex, amountToDelete, ...items);
+};
